@@ -7,7 +7,8 @@ fun main() {
 
     b.contenu = "Coca"
 
-    val m: Maison = Maison("Bleu", 6, 2, "Argile")
+    val m: Maison = Maison("Bleu", 4, 2, "Argile")
+    println(m)
 }
 
 class Bouteille {
@@ -18,14 +19,18 @@ class Bouteille {
     var contenu: String = "Eau"
 }
 
-class Maison(var couleur: String, nbPiece: Int, var nbGarage: Int = 0, terrain: String = "TERRE") {
+class Maison {
+
+    // Propriété avec le getter et le setter
+    var couleur: String
+    var nbGarage: Int
 
     // Propriété auto-calculer -> Définition du getter
     val possedeGarage: Boolean
         get() = nbGarage > 0
 
     // Propriété avec un setter
-    var nbPiece:Int = nbPiece      // Initialisation avec la variable "nbPiece" du constructeur primaire
+    var nbPiece:Int
         set(value) {
             if(value <= 0) throw Throwable("Maison sans piece ?")
 
@@ -38,8 +43,18 @@ class Maison(var couleur: String, nbPiece: Int, var nbGarage: Int = 0, terrain: 
 
     // Propriété avec un setter privé
     // -> Permet d'utiliser le setter dans la classe, mais pas en dehors
-    var terrain: String = terrain
+    var terrain: String
         private set(value) {
             field = value.uppercase()
         }
+
+    constructor(couleur: String, nbPiece: Int, nbGarage: Int = 0, terrain: String = "TERRE") {
+        // Utilisation du constructeur secondaire, pour forcé l'utiliser des setters
+        this.terrain = terrain
+        this.couleur = couleur
+        this.nbGarage = nbGarage
+        this.nbPiece = nbPiece
+    }
+
+    // Note: l'Initialisation avec une valeur par default ne prend pas en compte le setter
 }
